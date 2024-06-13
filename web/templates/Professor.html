@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% block title %}Professor Website{% endblock %}
+{% block content %}
+<style>
+  table {
+      width: 80%;
+      table-layout: auto;
+      border-collapse: collapse;
+  }
+  th, td {
+      border: 1px solid #e8e8e8;
+      padding: 8px;
+      text-align: center;
+  }
+  th {
+      background-color: #dedede;
+  }
+  .func-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      color: rgb(255, 255, 255);
+      border: 2px solid rgb(0, 0, 0);
+      background-color: rgb(66, 66, 66);
+      border-radius: 20px;
+      text-decoration: none;
+      text-align: center;
+  }
+  .func-btn:hover {
+      background-color: #636363;
+  }
+
+  .add-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      color: rgb(0, 0, 0);
+      border: 2px solid rgb(0, 0, 0);
+      background-color: rgb(255, 255, 255);
+      border-radius: 20px;
+      text-decoration: none;
+      text-align: center;
+  }
+  .add-btn:hover {
+      background-color: #636363;
+  }
+</style>
+
+<div align="center">
+  <br>
+  <h1>{{professor.name}}</h1>
+
+    <br>
+    <h3>個人簡介</h3>
+    <br>
+    
+    <div class="wrapper">
+      <p class="demo-1" align="left">{{professor.self_introduction}}</p>
+    </div>
+      <a class="add-btn" href="/professor/{{professor.professor_id}}/edit-introduction">Edit</a>
+    <br>
+    <br>
+
+    <h3>信箱： {{professor.email}}</h3>
+    <br>
+    <h3>辦公室電話： {{professor.office_phone}}</h3>
+    <br>
+
+    <div class="accordion-body">
+      <a href="/professor/{{professor.professor_id}}/class-schedule" class="func-btn">課表時間</a>
+    </div>
+    
+    <br>
+    <button class="func-btn" type="button" id="show-all-btn">Show all</button>&emsp;
+    <button class="func-btn" type="button" id="close-all-btn">Close all</button>
+    <br>
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <br>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+            專業領域
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapse1" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <pre>{{professor.interest}}</pre>
+            <a class="add-btn" href="/professor/1/edit-interest">修改專業領域</a>
+              <br>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse4" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+            學歷
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapse4" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            {% for experience in professor.SchoolExperience %}
+            <br>
+            <a>{{experience.school}}&emsp;{{experience.dept}}&emsp;{{experience.degree}}</a>
+            <form action="/professor/1/delete-school-experience/{{experience.SchoolExperience_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
+              <br>
+              <button type="submit" class="add-btn">刪除</button>
+            </form>
+            {% endfor %}
+              <br>
+                  <a class="btn btn-primary" href="/add-school-experience">新增學歷</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse7" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+            工作經歷
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapse7" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            {% for experience in professor.WorkExperience %}
+            <br>
+            <a>{{experience.company_name}}&emsp;{{experience.position}}</a>
+            <form action="/professor/1/delete-work-experience/{{experience.WorkExperience_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
+              <br>
+              <button type="submit" class="add-btn">刪除</button>
+            </form>
+            {% endfor %}
+            <br>
+              <a class="btn btn-primary" href="/add-work-experience">新增工作經歷</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse10" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+            獎勵及指導學生獲獎
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapse10" class="accordion-collapse collapse">
+          <div class="accordion-body">
+              {% for a in professor.award %}
+              <br>
+              <a>{{a.award_name}}&emsp;{{a.government}}&emsp;{{a.year}}&emsp;{{a.awardtime}}</a>
+              <form action="/professor/1/delete-award/{{a.award_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
+                <br>
+                <button type="submit" class="add-btn">刪除</button>
+              </form>
+              {% endfor %}
+              <br>
+                <a class="btn btn-primary" href="/add-award">新增獲獎</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse13" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+              論文
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapse13" class="accordion-collapse collapse">
+          <div class="accordion-body">
+              {% for items in professor.paper %}
+              <br>
+              <a>
+                {{items.paper_name}},
+                {% if items.collaborators != "" %}
+                  {{items.collaborators}},
+                {% endif %}
+                {{items.page_number_of_the_paper}}, {{items.indexed_time}}, {{items.indexed_website}}
+              </a>
+              <br>
+              {% endfor %}
+              <br>
+                  <a class="btn btn-primary" href="/add-paper">新增論文</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+</div>
+{% endblock %}

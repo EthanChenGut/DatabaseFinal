@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}新增學歷{% endblock %}
+{% block content %}
+<form method="POST">
+    <h1 align="left">新增學歷</h1>
+      <div class="mb-3">
+        <label for="school" class="form-label">School</label>
+        <input type="text" id="school" name="school" class="form-control" placeholder="Enter School" required>
+      </div>
+      <div class="mb-3">
+        <label for="dept" class="form-label">Dept.</label>
+        <input type="text" id="dept" name="dept" class="form-control" placeholder="Enter Department" required>
+      </div>
+      <div class="mb-3">
+        <label for="degree" class="form-label">Degree</label>
+        <input type="text" id="degree" name="degree" class="form-control" placeholder="Enter Department" required>
+      </div>
+      <button type="submit" class="btn btn-primary">ADD</button>
+  </form>
+  <br>
+{% endblock %}

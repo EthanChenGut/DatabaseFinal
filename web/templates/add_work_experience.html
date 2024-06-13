@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}新增工作經歷{% endblock %}
+{% block content %}
+<form method="POST">
+    <h1 align="left">工作經歷</h1>
+      <div class="mb-3">
+        <label for="company_name" class="form-label">Company Name</label>
+        <input type="text" id="company" name="company_name" class="form-control" placeholder="Enter Name" required>
+      </div>
+      <div class="mb-3">
+        <label for="position" class="form-label">Department & Position</label>
+        <input type="text" id="position" name="position" class="form-control" placeholder="Enter position" required>
+      </div>
+      <button type="submit" class="btn btn-primary">ADD</button>
+  </form>
+  <br>
+{% endblock %}

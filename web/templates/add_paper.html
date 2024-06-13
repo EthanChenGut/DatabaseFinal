@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}新增發表論文{% endblock %}
+{% block content %}
+<form method="POST">
+    <h1 align="left">新增發表論文</h1>
+      
+      <div class="mb-3">
+        <label for="paper_name" class="form-label">Paper Name</label>
+        <input type="text" id="paper_name" name="paper_name" class="form-control" placeholder="Enter Paper Name" required>
+      </div>
+      <div class="mb-3">
+        <label for="collaborators" class="form-label">Collaborators</label>
+        <input type="text" id="collaborators" name="collaborators" class="form-control" placeholder="Enter Collaborators">
+      </div>
+      <div class="mb-3">
+        <label for="page_number_of_the_paper" class="form-label">Page Number of the Paper</label>
+        <input type="text" id="page_number_of_the_paper" name="page_number_of_the_paper" class="form-control" placeholder="Enter Page Number of the Paper" required>
+      </div>
+      <div class="mb-3">
+        <label for="indexed_website" class="form-label">Indexed Website</label>
+        <input type="text" id="indexed_website" name="indexed_website" class="form-control" placeholder="Enter Indexed Website" required>
+      </div>
+      <div class="mb-3">
+        <label for="indexed_time" class="form-label">Indexed Time</label>
+        <input type="date" id="indexed_time" name="indexed_time" required>
+      </div>
+      <button type="submit" class="btn btn-primary">ADD</button>
+  </form>
+  <br>
+{% endblock %}

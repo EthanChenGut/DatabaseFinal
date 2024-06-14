@@ -83,12 +83,13 @@ class Award(db.Model):
     professor= db.relationship("Professor", backref="award")
 
 class Paper(db.Model):
-    def __init__(self,paper_name,collaborators,page_number_of_the_paper,indexed_website,indexed_time,):
+    def __init__(self,paper_name,collaborators,page_number_of_the_paper,indexed_website,indexed_time,professor_id):
         self.paper_name = paper_name
         self.collaborators = collaborators
         self.page_number_of_the_paper = page_number_of_the_paper
         self.indexed_website = indexed_website
         self.indexed_time = indexed_time
+        self.professor_id = professor_id
 
     paper_id = db.Column(db.Integer, primary_key=True)
     paper_name = db.Column(db.String(50))

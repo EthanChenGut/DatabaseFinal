@@ -100,14 +100,18 @@
         </h2>
         <div id="panelsStayOpen-collapse4" class="accordion-collapse collapse">
           <div class="accordion-body">
-            {% for experience in professor.SchoolExperience %}
-            <br>
-            <a>{{experience.school}}&emsp;{{experience.dept}}&emsp;{{experience.degree}}</a>
-            <form action="/professor/1/delete-school-experience/{{experience.SchoolExperience_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
+            {% if professor.SchoolExperience %}
+              {% for experience in professor.SchoolExperience %}
               <br>
-              <button type="submit" class="add-btn">刪除</button>
-            </form>
-            {% endfor %}
+              <a>{{experience.school}}&emsp;{{experience.dept}}&emsp;{{experience.degree}}</a>
+              <form action="/professor/1/delete-school-experience/{{experience.SchoolExperience_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
+                <br>
+                <button type="submit" class="add-btn">刪除</button>
+              </form>
+              {% endfor %}
+            {% else %}
+              <p>No SchoolExperience found.</p>
+            {% endif %}
               <br>
                   <a class="btn btn-primary" href="/add-school-experience">新增學歷</a>
           </div>
@@ -124,14 +128,18 @@
         </h2>
         <div id="panelsStayOpen-collapse7" class="accordion-collapse collapse">
           <div class="accordion-body">
-            {% for experience in professor.WorkExperience %}
-            <br>
-            <a>{{experience.company_name}}&emsp;{{experience.position}}</a>
-            <form action="/professor/1/delete-work-experience/{{experience.WorkExperience_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
+            {% if professor.WorkExperience %}
+              {% for experience in professor.WorkExperience %}
               <br>
-              <button type="submit" class="add-btn">刪除</button>
-            </form>
-            {% endfor %}
+              <a>{{experience.company_name}}&emsp;{{experience.position}}</a>
+              <form action="/professor/1/delete-work-experience/{{experience.WorkExperience_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
+                <br>
+                <button type="submit" class="add-btn">刪除</button>
+              </form>
+              {% endfor %}
+            {% else %}
+              <p>No WorkExperience found.</p>
+            {% endif %}
             <br>
               <a class="btn btn-primary" href="/add-work-experience">新增工作經歷</a>
           </div>
@@ -143,19 +151,24 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse10" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-            獎勵及指導學生獲獎
+            獎項及指導學生獲獎
           </button>
         </h2>
         <div id="panelsStayOpen-collapse10" class="accordion-collapse collapse">
           <div class="accordion-body">
+            {% if professor.award %}
               {% for a in professor.award %}
               <br>
+              <strong>{{ loop.index }}.</strong>
               <a>{{a.award_name}}&emsp;{{a.government}}&emsp;{{a.year}}&emsp;{{a.awardtime}}</a>
               <form action="/professor/1/delete-award/{{a.award_id}}"onsubmit="return confirm('Do you really want to delete this ?')"  method="post">
                 <br>
                 <button type="submit" class="add-btn">刪除</button>
               </form>
               {% endfor %}
+            {% else %}
+              <p>No Awards found.</p>
+            {% endif %}
               <br>
                 <a class="btn btn-primary" href="/add-award">新增獲獎</a>
           </div>
@@ -172,17 +185,25 @@
         </h2>
         <div id="panelsStayOpen-collapse13" class="accordion-collapse collapse">
           <div class="accordion-body">
-              {% for items in professor.paper %}
-              <br>
-              <a>
-                {{items.paper_name}},
-                {% if items.collaborators != "" %}
-                  {{items.collaborators}},
-                {% endif %}
-                {{items.page_number_of_the_paper}}, {{items.indexed_time}}, {{items.indexed_website}}
-              </a>
-              <br>
-              {% endfor %}
+            {% if professor.paper %}
+                {% for i in professor.paper %}
+                    <strong>{{ loop.index }}.</strong>
+                    <a>
+                        {{ i.paper_name }}
+                        {% if i.collaborators %}
+                            {{ i.collaborators }},
+                        {% endif %}
+                        {{ i.page_number_of_the_paper }}, {{ i.indexed_website }}, {{ i.indexed_time }}
+                    </a>
+                    <form action="/professor/1/delete-paper/{{ i.paper_id }}" onsubmit="return confirm('Do you really want to delete this ?')" method="post">
+                        <br>
+                        <button type="submit" class="add-btn">刪除</button>
+                    </form>
+                    <br>
+                {% endfor %}
+            {% else %}
+                <p>No Papers found.</p>
+            {% endif %}
               <br>
                   <a class="btn btn-primary" href="/add-paper">新增論文</a>
           </div>

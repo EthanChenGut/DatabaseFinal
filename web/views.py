@@ -61,22 +61,6 @@ def add_class_schedule(professor_id):
         return redirect(url_for("views.class_schedule", professor_id=professor_id))
     return render_template("add_class.html", professor=Professor.query.filter_by(professor_id=professor_id).first())
 
-
-# @views.route("/professor/<professor_id>/class-schedule/delete-class", methods=["GET", "POST"])
-# def delete_class_schedule(professor_id, schedule_id):
-    
-#     if request.method == "POST":
-#         schedule_id = request.form.get("delete-classID")
-#         schedule = db.session.query(ClassSchedule).filter_by(schedule_id=schedule_id).all()
-
-#         for i in schedule:
-#             db.session.delete(i)
-#         db.session.commit()
-
-#         flash("Delete Class", category="success")
-#         return redirect(url_for("views.class_schedule", professor_id=professor_id))
-#     return render_template("delete_class.html", professor=Professor.query.filter_by(professor_id=professor_id).first())
-
 @views.route("/professor/<professor_id>/class-schedule/delete-class/", methods=["GET", "POST"])
 def delete_class_schedule(professor_id):
     if request.method == "POST":
@@ -177,12 +161,11 @@ def add_paper():
         indexed_time = request.form.get("indexed_time")
         date_format = "%Y-%m-%d"
         indexed_time = datetime.strptime(indexed_time, date_format).date()
-        paper = Paper(paper_name, collaborators, page_number_of_the_paper, indexed_website, indexed_time)
+        paper = Paper(paper_name, collaborators, page_number_of_the_paper, indexed_website, indexed_time, professor_id=1)
 
         if Paper.query.filter_by(paper_name=paper_name).first():
             paper = Paper.query.filter_by(paper_name=paper_name).first()
             if paper.compare(paper):
-                # paper.professor.append()
                 db.session.commit()
 
                 return redirect(url_for("views.home"))
@@ -195,6 +178,16 @@ def add_paper():
             flash("Add Paper", category="success")
             return redirect(url_for("views.home"))
     return render_template("add_paper.html")
+
+
+@views.route("/professor/<professor_id>/delete-paper/<paper_id>", methods=["GET", "POST"])
+def delete_paper(professor_id, paper_id):
+    paperitem = db.session.query(Paper).filter_by(paper_id=paper_id).all()
+    for item in paperitem:
+        db.session.delete(item)
+    db.session.commit()
+    flash("Delete Paper", category="success")
+    return redirect(url_for("views.home"))
 
 
 @views.route("/add-award/", methods=["GET", "POST"])
@@ -224,5 +217,5 @@ def delete_award(professor_id, award_id):
     for item in awarditem:
         db.session.delete(item)
     db.session.commit()
-    flash("Delete SchoolExperience", category="success")
+    flash("Delete Award", category="success")
     return redirect(url_for("views.home"))

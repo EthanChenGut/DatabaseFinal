@@ -189,11 +189,11 @@
                 {% for i in professor.paper %}
                     <strong>{{ loop.index }}.</strong>
                     <a>
-                        {{ i.paper_name }}
+                        {{ i.paper_name }}&emsp;
                         {% if i.collaborators %}
-                            {{ i.collaborators }},
+                            {{ i.collaborators }}&emsp;
                         {% endif %}
-                        {{ i.page_number_of_the_paper }}, {{ i.indexed_website }}, {{ i.indexed_time }}
+                        {{ i.page_number_of_the_paper }}&emsp; {{ i.indexed_website }}&emsp; {{ i.indexed_time }}
                     </a>
                     <form action="/professor/1/delete-paper/{{ i.paper_id }}" onsubmit="return confirm('Do you really want to delete this ?')" method="post">
                         <br>
